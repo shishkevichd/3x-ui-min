@@ -36,8 +36,6 @@ class AllSetting {
         this.subJsonMux = "";
         this.subJsonRules = "";
 
-        this.timeLocation = "Local";
-
         if (data == null) {
             return
         }

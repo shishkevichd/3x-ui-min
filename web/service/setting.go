@@ -37,7 +37,6 @@ var defaultValueMap = map[string]string{
 	"expireDiff":                  "0",
 	"trafficDiff":                 "0",
 	"remarkModel":                 "-ieo",
-	"timeLocation":                "Local",
 	"twoFactorEnable":             "false",
 	"twoFactorToken":              "",
 	"subEnable":                   "false",
@@ -326,10 +325,7 @@ func (s *SettingService) GetBasePath() (string, error) {
 }
 
 func (s *SettingService) GetTimeLocation() (*time.Location, error) {
-	l, err := s.getString("timeLocation")
-	if err != nil {
-		return nil, err
-	}
+	l := "Local"
 	location, err := time.LoadLocation(l)
 	if err != nil {
 		defaultLocation := defaultValueMap["timeLocation"]

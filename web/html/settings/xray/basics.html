@@ -1,14 +1,6 @@
 {{define "settings/xray/basics"}}
 <a-collapse default-active-key="1">
     <a-collapse-panel key="1" header='{{ i18n "pages.xray.generalConfigs"}}'>
-        <a-row :xs="24" :sm="24" :lg="12">
-            <a-alert type="warning" :style="{ textAlign: 'center' }">
-                <template slot="message">
-                    <a-icon type="exclamation-circle" theme="filled" :style="{ color: '#FFA031' }"></a-icon>
-                    <span>{{ i18n "pages.xray.generalConfigsDesc" }}</span>
-                </template>
-            </a-alert>
-        </a-row>
         <a-setting-list-item paddings="small">
             <template #title>{{ i18n "pages.xray.FreedomStrategy" }}</template>
             <template #description>{{ i18n "pages.xray.FreedomStrategyDesc" }}</template>
@@ -65,14 +57,6 @@
         </a-setting-list-item>
     </a-collapse-panel>
     <a-collapse-panel key="3" header='{{ i18n "pages.xray.logConfigs" }}'>
-        <a-row :xs="24" :sm="24" :lg="12">
-            <a-alert type="warning" :style="{ textAlign: 'center' }">
-                <template slot="message">
-                    <a-icon type="exclamation-circle" theme="filled" :style="{ color: '#FFA031' }"></a-icon>
-                    <span>{{ i18n "pages.xray.logConfigsDesc" }}</span>
-                </template>
-            </a-alert>
-        </a-row>
         <a-setting-list-item paddings="small">
             <template #title>{{ i18n "pages.xray.logLevel" }}</template>
             <template #description>{{ i18n "pages.xray.logLevelDesc" }}</template>

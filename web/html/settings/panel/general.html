@@ -113,14 +113,5 @@
             </template>
         </a-setting-list-item>
     </a-collapse-panel>
-    <a-collapse-panel key="5" header='{{ i18n "pages.settings.dateAndTime" }}'>
-        <a-setting-list-item paddings="small">
-            <template #title>{{ i18n "pages.settings.timeZone"}}</template>
-            <template #description>{{ i18n "pages.settings.timeZoneDesc"}}</template>
-            <template #control>
-                <a-input type="text" v-model="allSetting.timeLocation"></a-input>
-            </template>
-        </a-setting-list-item>
-    </a-collapse-panel>
 </a-collapse>
 {{end}}

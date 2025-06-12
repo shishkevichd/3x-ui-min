@@ -52,41 +52,20 @@
     <a-layout id="content-layout">
       <a-layout-content>
         <a-spin :spinning="spinning" :delay="500" tip='{{ i18n "loading"}}'>
-          <transition name="list" appear>
-            <a-alert type="error" v-if="showAlert" :style="{ marginBottom: '10px' }"
-              message='{{ i18n "secAlertTitle" }}'
-              color="red"
-              description='{{ i18n "secAlertSsl" }}'
-              show-icon closable>
-            </a-alert>
-          </transition>
           <a-space direction="vertical">
             <a-card hoverable :style="{ marginBottom: '.5rem' }">
-              <a-row :style="{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }">
-                <a-col :xs="24" :sm="10" :style="{ padding: '4px' }">
-                  <a-space direction="horizontal">
-                    <a-button type="primary" :disabled="saveBtnDisable" @click="updateXraySetting">{{ i18n "pages.xray.save" }}</a-button>
-                    <a-button type="danger" :disabled="!saveBtnDisable" @click="restartXray">{{ i18n "pages.xray.restart" }}</a-button>
-                    <a-popover v-if="restartResult"
-                        :overlay-class-name="themeSwitcher.currentTheme">
-                      <span slot="title">{{ i18n "pages.index.xrayErrorPopoverTitle" }}</span>
-                      <template slot="content">
-                        <span :style="{ maxWidth: '400px' }" v-for="line in restartResult.split('\n')">[[ line ]]</span>
-                      </template>
-                      <a-icon type="question-circle"></a-icon>
-                    </a-popover>
-                  </a-space>
-                </a-col>
-                <a-col :xs="24" :sm="14">
-                  <template>
-                    <div>
-                      <a-back-top :target="() => document.getElementById('content-layout')" visibility-height="200"></a-back-top>
-                      <a-alert type="warning" :style="{ float: 'right', width: 'fit-content' }" message='{{ i18n "pages.settings.infoDesc" }}' show-icon>
-                      </a-alert>
-                    </div>
-                  </template>
-                </a-col>
-              </a-row>
+              <a-space direction="horizontal">
+                <a-button type="primary" :disabled="saveBtnDisable" @click="updateXraySetting">{{ i18n "pages.xray.save" }}</a-button>
+                <a-button type="danger" :disabled="!saveBtnDisable" @click="restartXray">{{ i18n "pages.xray.restart" }}</a-button>
+                <a-popover v-if="restartResult"
+                    :overlay-class-name="themeSwitcher.currentTheme">
+                    <span slot="title">{{ i18n "pages.index.xrayErrorPopoverTitle" }}</span>
+                    <template slot="content">
+                    <span :style="{ maxWidth: '400px' }" v-for="line in restartResult.split('\n')">[[ line ]]</span>
+                    </template>
+                    <a-icon type="question-circle"></a-icon>
+                </a-popover>
+              </a-space>
             </a-card>
             <a-tabs class="ant-card-dark-box-nohover" default-active-key="1"
                 @change="(activeKey) => { this.changePage(activeKey); }"

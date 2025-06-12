@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"net"
 	"strings"
-	"time"
 
 	"x-ui/util/common"
 )
@@ -27,7 +26,6 @@ type AllSetting struct {
 	ExpireDiff                  int    `json:"expireDiff" form:"expireDiff"`
 	TrafficDiff                 int    `json:"trafficDiff" form:"trafficDiff"`
 	RemarkModel                 string `json:"remarkModel" form:"remarkModel"`
-	TimeLocation                string `json:"timeLocation" form:"timeLocation"`
 	TwoFactorEnable				bool   `json:"twoFactorEnable" form:"twoFactorEnable"`
 	TwoFactorToken				string `json:"twoFactorToken" form:"twoFactorToken"`
 	SubEnable                   bool   `json:"subEnable" form:"subEnable"`
@@ -111,11 +109,6 @@ func (s *AllSetting) CheckValid() error {
 	}
 	if !strings.HasSuffix(s.SubJsonPath, "/") {
 		s.SubJsonPath += "/"
-	}
-
-	_, err := time.LoadLocation(s.TimeLocation)
-	if err != nil {
-		return common.NewError("time location not exist:", s.TimeLocation)
 	}
 
 	return nil

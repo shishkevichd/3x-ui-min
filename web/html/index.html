@@ -4,7 +4,7 @@
 <style>
   @media (min-width: 769px) {
     .ant-layout-content {
-      margin: 24px 16px;
+      margin: 8px 12px;
     }
     .ant-card-hoverable {
       margin-inline: 0.3rem;
@@ -87,14 +87,6 @@
       <a-layout-content>
         <a-spin :spinning="spinning" :delay="200" :tip="loadingTip">
           <transition name="list" appear>
-            <a-alert type="error" v-if="showAlert" :style="{ marginBottom: '10px' }"
-              message='{{ i18n "secAlertTitle" }}'
-              color="red"
-              description='{{ i18n "secAlertSsl" }}'
-              show-icon closable>
-            </a-alert>
-          </transition>
-          <transition name="list" appear>
             <template>
               <a-row v-if="!status.isLoaded">
                 <a-card :style="{ textAlign: 'center', padding: '30px 0', marginTop: '10px', background: 'transparent', border: 'none' }">
@@ -102,59 +94,6 @@
                 </a-card>
               </a-row>
               <a-row v-else>
-                <a-row>
-                  <a-card hoverable>
-                    <a-row>
-                      <a-col :sm="24" :md="12">
-                        <a-row>
-                          <a-col :span="12" :style="{ textAlign: 'center' }">
-                            <a-progress type="dashboard" status="normal"
-                              :stroke-color="status.cpu.color"
-                              :percent="status.cpu.percent"></a-progress>
-                            <div>
-                              <b>{{ i18n "pages.index.cpu" }}:</b> [[ CPUFormatter.cpuCoreFormat(status.cpuCores) ]] 
-                              <a-tooltip>
-                                <a-icon type="area-chart"></a-icon> 
-                                <template slot="title">
-                                  <div><b>{{ i18n "pages.index.logicalProcessors" }}:</b> [[ (status.logicalPro) ]]</div>
-                                  <div><b>{{ i18n "pages.index.frequency" }}:</b> [[ CPUFormatter.cpuSpeedFormat(status.cpuSpeedMhz) ]]</div>
-                                </template>
-                              </a-tooltip>
-                            </div>
-                          </a-col>
-                          <a-col :span="12" :style="{ textAlign: 'center' }">
-                            <a-progress type="dashboard" status="normal"
-                              :stroke-color="status.mem.color"
-                              :percent="status.mem.percent"></a-progress>
-                            <div>
-                              <b>{{ i18n "pages.index.memory"}}:</b> [[ SizeFormatter.sizeFormat(status.mem.current) ]] / [[ SizeFormatter.sizeFormat(status.mem.total) ]]
-                            </div>
-                          </a-col>
-                        </a-row>
-                      </a-col>
-                      <a-col :sm="24" :md="12">
-                        <a-row>
-                          <a-col :span="12" :style="{ textAlign: 'center' }">
-                            <a-progress type="dashboard" status="normal"
-                              :stroke-color="status.swap.color"
-                              :percent="status.swap.percent"></a-progress>
-                            <div>
-                              <b>{{ i18n "pages.index.swap" }}:</b> [[ SizeFormatter.sizeFormat(status.swap.current) ]] / [[ SizeFormatter.sizeFormat(status.swap.total) ]]
-                            </div>
-                          </a-col>
-                          <a-col :span="12" :style="{ textAlign: 'center' }">
-                            <a-progress type="dashboard" status="normal"
-                              :stroke-color="status.disk.color"
-                              :percent="status.disk.percent"></a-progress>
-                            <div>
-                              <b>{{ i18n "pages.index.storage"}}:</b> [[ SizeFormatter.sizeFormat(status.disk.current) ]] / [[ SizeFormatter.sizeFormat(status.disk.total) ]]
-                            </div>
-                          </a-col>
-                        </a-row>
-                      </a-col>
-                    </a-row>
-                  </a-card>
-                </a-row>
                 <a-col :sm="24" :lg="12">
                   <a-card hoverable>
                     <template #title>
@@ -207,7 +146,12 @@
                   </a-card>
                 </a-col>
                 <a-col :sm="24" :lg="12">
-                  <a-card title='{{ i18n "menu.link" }}' hoverable>
+                  <a-card hoverable>
+                    <template #title>
+                      <a-space direction="horizontal">
+                        <span>{{ i18n "menu.link" }}</span>
+                      </a-space>
+                    </template>
                     <template #actions>
                       <a-space direction="horizontal" @click="openLogs()" :style="{ justifyContent: 'center' }">
                         <a-icon type="bars"></a-icon>
@@ -222,37 +166,6 @@
                         <span v-if="!isMobile">{{ i18n "pages.index.backup" }}</span>
                       </a-space>
                     </template>
-                  </a-card>
-                </a-col>
-                <a-col :sm="24" :lg="12">
-                  <a-card title='3X-UI' hoverable>
-                    <a-tag color="green">
-                      <span>Based on v{{ .cur_ver }}</span>
-                    </a-tag>
-                  </a-card>
-                </a-col>
-                <a-col :sm="24" :lg="12">
-                  <a-card title='{{ i18n "pages.index.operationHours" }}' hoverable>
-                    <a-tag :color="status.xray.color">Xray: [[ TimeFormatter.formatSecond(status.appStats.uptime) ]]</a-tag>
-                    <a-tag color="green">OS: [[ TimeFormatter.formatSecond(status.uptime) ]]</a-tag>
-                  </a-card>
-                </a-col>
-                <a-col :sm="24" :lg="12">
-                  <a-card title='{{ i18n "pages.index.systemLoad" }}' hoverable>
-                    <a-tag color="green">
-                      <a-tooltip>
-                        [[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]]
-                        <template slot="title">
-                          {{ i18n "pages.index.systemLoadDesc" }}
-                        </template>
-                      </a-tooltip>
-                    </a-tag>
-                  </a-card>
-                </a-col>
-                <a-col :sm="24" :lg="12">
-                  <a-card title='{{ i18n "usage"}}' hoverable>
-                    <a-tag color="green"> {{ i18n "pages.index.memory" }}: [[ SizeFormatter.sizeFormat(status.appStats.mem) ]] </a-tag>
-                    <a-tag color="green"> {{ i18n "pages.index.threads" }}: [[ status.appStats.threads ]] </a-tag>
                   </a-card>
                 </a-col>
                 <a-col :sm="24" :lg="12">
@@ -478,23 +391,11 @@
 
     class Status {
         constructor(data, isLoaded = false) {
-            this.cpu = new CurTotal(0, 0);
-            this.cpuCores = 0;
-            this.logicalPro = 0;
-            this.cpuSpeedMhz = 0;
-            this.disk = new CurTotal(0, 0);
-            this.loads = [0, 0, 0];
-            this.mem = new CurTotal(0, 0);
             this.netIO = { up: 0, down: 0 };
             this.netTraffic = { sent: 0, recv: 0 };
             this.publicIP = { ipv4: 0, ipv6: 0 };
-            this.swap = new CurTotal(0, 0);
             this.tcpCount = 0;
             this.udpCount = 0;
-            this.uptime = 0;
-            this.appUptime = 0;
-            this.appStats = {threads: 0, mem: 0, uptime: 0};
-
             this.xray = { state: 'stop', stateMsg: "", errorMsg: "", version: "", color: "" };
 
             if (data == null) {
@@ -502,22 +403,11 @@
             }
 
             this.isLoaded = isLoaded;
-            this.cpu = new CurTotal(data.cpu, 100);
-            this.cpuCores = data.cpuCores;
-            this.logicalPro = data.logicalPro;
-            this.cpuSpeedMhz = data.cpuSpeedMhz;
-            this.disk = new CurTotal(data.disk.current, data.disk.total);
-            this.loads = data.loads.map(load => NumberFormatter.toFixed(load, 2));
-            this.mem = new CurTotal(data.mem.current, data.mem.total);
             this.netIO = data.netIO;
             this.netTraffic = data.netTraffic;
             this.publicIP = data.publicIP;
-            this.swap = new CurTotal(data.swap.current, data.swap.total);
             this.tcpCount = data.tcpCount;
             this.udpCount = data.udpCount;
-            this.uptime = data.uptime;
-            this.appUptime = data.appUptime;
-            this.appStats = data.appStats;
             this.xray = data.xray;
             switch (this.xray.state) {
                 case 'running':
