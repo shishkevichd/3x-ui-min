@@ -9,15 +9,10 @@ import (
 
 var (
 	webServer WebServer
-	subServer SubServer
 )
 
 type WebServer interface {
 	GetCron() *cron.Cron
-	GetCtx() context.Context
-}
-
-type SubServer interface {
 	GetCtx() context.Context
 }
 
@@ -27,12 +22,4 @@ func SetWebServer(s WebServer) {
 
 func GetWebServer() WebServer {
 	return webServer
-}
-
-func SetSubServer(s SubServer) {
-	subServer = s
-}
-
-func GetSubServer() SubServer {
-	return subServer
 }

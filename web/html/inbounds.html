@@ -221,10 +221,6 @@
                       <a-icon type="export"></a-icon>
                       {{ i18n "pages.inbounds.export" }}
                     </a-menu-item>
-                    <a-menu-item key="subs" v-if="subSettings.enable">
-                      <a-icon type="export"></a-icon>
-                      {{ i18n "pages.inbounds.export" }} - {{ i18n "pages.settings.subSettings" }}
-                    </a-menu-item>
                     <a-menu-item key="resetInbounds">
                       <a-icon type="reload"></a-icon>
                       {{ i18n "pages.inbounds.resetAllTraffic" }}
@@ -323,10 +319,6 @@
                         <a-menu-item key="export">
                           <a-icon type="export"></a-icon>
                           {{ i18n "pages.inbounds.export"}}
-                        </a-menu-item>
-                        <a-menu-item key="subs" v-if="subSettings.enable">
-                          <a-icon type="export"></a-icon>
-                          {{ i18n "pages.inbounds.export"}} - {{ i18n "pages.settings.subSettings" }}
                         </a-menu-item>
                         <a-menu-item key="delDepletedClients" :style="{ color: '#FF4D4F' }">
                           <a-icon type="rest"></a-icon>
@@ -683,12 +675,6 @@
             isRefreshEnabled: localStorage.getItem("isRefreshEnabled") === "true" ? true : false,
             refreshing: false,
             refreshInterval: Number(localStorage.getItem("refreshInterval")) || 5000,
-            subSettings: {
-                enable : false,
-                subTitle : '',
-                subURI : '',
-                subJsonURI : '',
-            },
             remarkModel: '-ieo',
             showAlert: false,
             ipLimitEnable: false,
@@ -729,12 +715,6 @@
                     this.trafficDiff = trafficDiff * 1073741824;
                     this.defaultCert = defaultCert;
                     this.defaultKey = defaultKey;
-                    this.subSettings = {
-                        enable : subEnable,
-                        subTitle : subTitle,
-                        subURI: subURI,
-                        subJsonURI: subJsonURI
-                    };
                     this.pageSize = pageSize;
                     this.remarkModel = remarkModel;
                     this.ipLimitEnable = ipLimitEnable;
@@ -865,9 +845,6 @@
                     case "export":
                         this.exportAllLinks();
                         break;
-                    case "subs":
-                        this.exportAllSubs();
-                        break;
                     case "resetInbounds":
                         this.resetAllTraffic();
                         break;
@@ -898,9 +875,6 @@
                         break;
                     case "export":
                         this.inboundLinks(dbInbound.id);
-                        break;
-                    case "subs":
-                        this.exportSubs(dbInbound.id);
                         break;
                     case "clipboard":
                         this.copy(dbInbound.id);
@@ -1126,36 +1100,6 @@
                     this.submit(`/panel/inbound/${dbInboundId}/delClient/${clientId}`);
                 }
             },
-            getSubGroupClients(dbInbounds, currentClient) {
-                const response = {
-                  inbounds: [],
-                  clients: [],
-                  editIds: []
-                }
-                if (dbInbounds && dbInbounds.length > 0 && currentClient) {
-                    dbInbounds.forEach((dbInboundItem) => {
-                        const dbInbound = new DBInbound(dbInboundItem);
-                        if (dbInbound) {
-                            const inbound = dbInbound.toInbound();
-                            if (inbound) {
-                                const clients = inbound.clients;
-                                if (clients.length > 0) {
-                                    clients.forEach((client) => {
-                                        if (client['subId'] === currentClient['subId']) {
-                                            client['inboundId'] = dbInboundItem.id
-                                            client['clientId'] = this.getClientId(dbInbound.protocol, client)
-                                            response.inbounds.push(dbInboundItem.id)
-                                            response.clients.push(client)
-                                            response.editIds.push(client['clientId'])
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                    })
-                }
-                return response;
-            },
             getClientId(protocol, client) {
                 switch (protocol) {
                     case Protocols.TROJAN: return client.password;
@@ -1351,22 +1295,6 @@
                 newDbInbound = this.checkFallback(dbInbound);
                 txtModal.show('{{ i18n "pages.inbounds.export"}}', newDbInbound.genInboundLinks(this.remarkModel), newDbInbound.remark);
             },
-            exportSubs(dbInboundId) {
-                const dbInbound = this.dbInbounds.find(row => row.id === dbInboundId);
-                const clients = this.getInboundClients(dbInbound);
-                let subLinks = []
-                if (clients != null){
-                    clients.forEach(c => {
-                        if (c.subId && c.subId.length>0){
-                            subLinks.push(this.subSettings.subURI + c.subId)
-                        }
-                    })
-                }
-                txtModal.show(
-                    '{{ i18n "pages.inbounds.export"}} - {{ i18n "pages.settings.subSettings" }}',
-                    [...new Set(subLinks)].join('\n'),
-                    dbInbound.remark + "-Subs");
-            },
             importInbound() {
                 promptModal.open({
                     title: '{{ i18n "pages.inbounds.importInbound" }}',
@@ -1377,23 +1305,6 @@
                         await this.submit('/panel/inbound/import', {data: dbInboundText}, promptModal);
                     },
                 });
-            },
-            exportAllSubs() {
-                let subLinks = []
-                for (const dbInbound of this.dbInbounds) {
-                    const clients = this.getInboundClients(dbInbound);
-                    if (clients != null){
-                        clients.forEach(c => {
-                            if (c.subId && c.subId.length>0){
-                                subLinks.push(this.subSettings.subURI + c.subId)
-                            }
-                        })
-                    }
-                }
-                txtModal.show(
-                    '{{ i18n "pages.inbounds.export"}} - {{ i18n "pages.settings.subSettings" }}',
-                    [...new Set(subLinks)].join('\r\n'),
-                    'All-Inbounds-Subs');
             },
             exportAllLinks() {
                 let copyText = [];

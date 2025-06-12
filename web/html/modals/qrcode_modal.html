@@ -21,24 +21,6 @@
     </a-space>
   </template>
   <tr-qr-modal class="qr-modal">
-    <template v-if="app.subSettings.enable && qrModal.subId">
-      <tr-qr-box class="qr-box">
-        <a-tag color="purple" class="qr-tag"><span>{{ i18n "pages.settings.subSettings"}}</span></a-tag>
-        <tr-qr-bg class="qr-bg-sub">
-          <tr-qr-bg-inner class="qr-bg-sub-inner">
-            <canvas @click="copy(genSubLink(qrModal.client.subId))" id="qrCode-sub" class="qr-cv"></canvas>
-          </tr-qr-bg-inner>
-        </tr-qr-bg>
-      </tr-qr-box>
-      <tr-qr-box class="qr-box">
-        <a-tag color="purple" class="qr-tag"><span>{{ i18n "pages.settings.subSettings"}} Json</span></a-tag>
-        <tr-qr-bg class="qr-bg-sub">
-          <tr-qr-bg-inner class="qr-bg-sub-inner">
-            <canvas @click="copy(genSubJsonLink(qrModal.client.subId))" id="qrCode-subJson" class="qr-cv"></canvas>
-          </tr-qr-bg-inner>
-        </tr-qr-bg>
-      </tr-qr-box>
-    </template>
     <template v-for="(row, index) in qrModal.qrcodes">
       <tr-qr-box class="qr-box">
         <a-tag color="green" class="qr-tag"><span>[[ row.remark ]]</span></a-tag>
@@ -104,13 +86,11 @@
     client: null,
     qrcodes: [],
     visible: false,
-    subId: '',
     show: function (title = '', dbInbound, client) {
       this.title = title;
       this.dbInbound = dbInbound;
       this.inbound = dbInbound.toInbound();
       this.client = client;
-      this.subId = '';
       this.qrcodes = [];
       // Reset the status fetched flag when showing the modal
       if (qrModalApp) qrModalApp.statusFetched = false;
@@ -230,12 +210,6 @@
           level: 'L'
         });
       },
-      genSubLink(subID) {
-        return app.subSettings.subURI + subID;
-      },
-      genSubJsonLink(subID) {
-        return app.subSettings.subJsonURI + subID;
-      },
       revertOverflow() {
         const elements = document.querySelectorAll(".qr-tag");
         elements.forEach((element) => {
@@ -258,11 +232,6 @@
         this.revertOverflow();
         // Reset the flag when modal is closed so it will fetch again next time
         this.statusFetched = false;
-      }
-      if (qrModal.client && qrModal.client.subId) {
-        qrModal.subId = qrModal.client.subId;
-        this.setQrCode("qrCode-sub", this.genSubLink(qrModal.subId));
-        this.setQrCode("qrCode-subJson", this.genSubJsonLink(qrModal.subId));
       }
       qrModal.qrcodes.forEach((element, index) => {
         this.setQrCode("qrCode-" + index, element.link);

@@ -12,282 +12,59 @@
     /*margin: 20px 0 50px 0;*/
     height: 110px;
   }
-
-  .ant-form-item-children .ant-btn,
-  .ant-input {
-    height: 50px;
-    border-radius: 30px;
-  }
-
-  .ant-input-group-addon {
-    border-radius: 0 30px 30px 0;
-    width: 50px;
-    font-size: 18px;
-  }
-
-  .ant-input-affix-wrapper .ant-input-prefix {
-    left: 23px;
-  }
-
-  .ant-input-affix-wrapper .ant-input:not(:first-child) {
-    padding-left: 50px;
-  }
-
-  .centered {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .title {
-    font-size: 2rem;
-    margin-block-end: 2rem;
-  }
-
-  .title b {
-    font-weight: bold !important;
-  }
-
-  #app {
-    overflow: hidden;
-  }
-
-  #login {
-    animation: charge 0.5s both;
-    background-color: #fff;
-    border-radius: 2rem;
-    padding: 4rem 3rem;
-    transition: all 0.3s;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-  }
-
-  #login:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
-  }
-
-  @keyframes charge {
-    from {
-      transform: translateY(5rem);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .dark #login {
-    background-color: var(--dark-color-surface-100);
-  }
-
-  .dark h1 {
-    color: rgba(255, 255, 255);
-  }
-
-  .ant-btn-primary-login {
-    width: 100%;
-  }
-
-  .ant-btn-primary-login:focus,
-  .ant-btn-primary-login:hover {
-    color: #fff;
-    background-color: #006655;
-    border-color: #006655;
-    background-image: linear-gradient(270deg,
-        rgba(123, 199, 77, 0) 30%,
-        #009980,
-        rgba(123, 199, 77, 0) 100%);
-    background-repeat: no-repeat;
-    animation: ma-bg-move ease-in-out 5s infinite;
-    background-position-x: -500px;
-    width: 95%;
-    animation-delay: -0.5s;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
-  }
-
-  .ant-btn-primary-login.active,
-  .ant-btn-primary-login:active {
-    color: #fff;
-    background-color: #006655;
-    border-color: #006655;
-  }
-
-  @keyframes ma-bg-move {
-    0% {
-      background-position: -500px 0;
-    }
-
-    50% {
-      background-position: 1000px 0;
-    }
-
-    100% {
-      background-position: 1000px 0;
-    }
-  }
-
-  .wave-btn-bg {
-    position: relative;
-    border-radius: 25px;
-    width: 100%;
-    transition: all 0.3s cubic-bezier(.645, .045, .355, 1);
-  }
-
-  .dark .wave-btn-bg {
-    color: #fff;
-    position: relative;
-    background-color: #0a7557;
-    border: 2px double transparent;
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    background-size: 300%;
-    width: 100%;
-    z-index: 1;
-  }
-
-  .dark .wave-btn-bg:hover {
-    animation: wave-btn-tara 4s ease infinite;
-  }
-
-  .dark .wave-btn-bg-cl {
-    background-image: linear-gradient(rgba(13, 14, 33, 0), rgba(13, 14, 33, 0)),
-      radial-gradient(circle at left top, #006655, #009980, #006655) !important;
-    border-radius: 3em;
-  }
-
-  .dark .wave-btn-bg-cl:hover {
-    width: 95%;
-  }
-
-  .dark .wave-btn-bg-cl:before {
-    position: absolute;
-    content: "";
-    top: -5px;
-    left: -5px;
-    bottom: -5px;
-    right: -5px;
-    z-index: -1;
-    background: inherit;
-    background-size: inherit;
-    border-radius: 4em;
-    opacity: 0;
-    transition: 0.5s;
-  }
-
-  .dark .wave-btn-bg-cl:hover::before {
-    opacity: 1;
-    filter: blur(20px);
-    animation: wave-btn-tara 8s linear infinite;
-  }
-
-  @keyframes wave-btn-tara {
-    to {
-      background-position: 300%;
-    }
-  }
-
-  .dark .ant-btn-primary-login {
-    font-size: 14px;
-    color: #fff;
-    text-align: center;
-    background-image: linear-gradient(rgba(13, 14, 33, 0.45),
-        rgba(13, 14, 33, 0.35));
-    border-radius: 2rem;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    height: 46px;
-    position: relative;
-    white-space: nowrap;
-    cursor: pointer;
-    touch-action: manipulation;
-    padding: 0 15px;
-    width: 100%;
-    animation: none;
-    background-position-x: 0;
-    box-shadow: none;
-  }
-
-  .headline {
-    text-align: center;
-  }
-
-  .setting-section {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 22px;
-  }
-
-  .ant-space-item .ant-switch {
-    margin: 2px 0 4px;
-  }
 </style>
 
 <body>
   <a-layout id="app" v-cloak :class="themeSwitcher.currentTheme">
     <transition name="list" appear>
       <a-layout-content :style="{ minHeight: '0' }">
-        <a-row type="flex" justify="center" align="middle" :style="{ height: '100%', overflow: 'auto', overflowX: 'hidden' }">
-          <a-col :xs="22" :sm="12" :md="10" :lg="8" :xl="6" :xxl="5" id="login" :style="{ margin: '3rem 0' }">
-            <div class="setting-section">
-              <a-popover :overlay-class-name="themeSwitcher.currentTheme" title='{{ i18n "menu.settings" }}' placement="bottomRight" trigger="click">
-                <template slot="content">
-                  <a-space direction="vertical" :size="10">
-                    <a-theme-switch-login></a-theme-switch-login>
-                  </a-space>
-                </template>
-                <a-button shape="circle" icon="setting"></a-button>
-              </a-popover>
-            </div>
-            <a-row type="flex" justify="center">
-              <a-col :style="{ width: '100%' }">
-                <h2 class="title headline zoom">
-                  {{ i18n "pages.login.title" }}
-                </h2>
-              </a-col>
-            </a-row>
-            <a-row type="flex" justify="center">
-              <a-col span="24">
-                <a-form>
-                  <a-space direction="vertical" size="middle">
-                    <a-form-item>
-                      <a-input autocomplete="username" name="username" v-model.trim="user.username"
-                        placeholder='{{ i18n "username" }}' @keydown.enter.native="login" autofocus>
-                        <a-icon slot="prefix" type="user" :style="{ fontSize: '1rem' }"></a-icon>
-                      </a-input>
-                    </a-form-item>
-                    <a-form-item>
-                      <a-input-password autocomplete="password" name="password" v-model.trim="user.password"
-                        placeholder='{{ i18n "password" }}' @keydown.enter.native="login">
-                        <a-icon slot="prefix" type="lock" :style="{ fontSize: '1rem' }"></a-icon>
-                      </a-input-password>
-                    </a-form-item>
-                    <a-form-item v-if="twoFactorEnable">
-                      <a-input autocomplete="totp" name="twoFactorCode" v-model.trim="user.twoFactorCode"
-                        placeholder='{{ i18n "twoFactorCode" }}' @keydown.enter.native="login">
-                        <a-icon slot="prefix" type="key" :style="{ fontSize: '1rem' }"></a-icon>
-                      </a-input>
-                    </a-form-item>
-                    <a-form-item>
-                      <a-row justify="center" class="centered">
-                        <div :style="{ height: '50px', marginTop: '1rem', ...loading ? { width: '52px' } : { display: 'inline-block' } }" class="wave-btn-bg wave-btn-bg-cl">
-                          <a-button class="ant-btn-primary-login" type="primary" :loading="loading" @click="login"
-                            :icon="loading ? 'poweroff' : undefined">
-                            [[ loading ? '' : '{{ i18n "login" }}' ]]
-                          </a-button>
-                        </div>
-                      </a-row>
-                    </a-form-item>
-                  </a-space>
-                </a-form>
-              </a-col>
-            </a-row>
+        <a-row type="flex" justify="center" align="middle"
+          :style="{ height: '100%', overflow: 'auto', overflowX: 'hidden' }">
+          <a-col :xs="22" :sm="12" :md="10" :lg="8" :xl="6" :xxl="5">
+            <a-card>
+              <template #title>
+                <span>{{ i18n "pages.login.title" }}</span>
+              </template>
+              <template #extra>
+                <a-popover :overlay-class-name="themeSwitcher.currentTheme" title='{{ i18n "menu.settings" }}'
+                  placement="bottomRight" trigger="click">
+                  <template slot="content">
+                    <a-space direction="vertical" :size="10">
+                      <a-theme-switch-login></a-theme-switch-login>
+                    </a-space>
+                  </template>
+                  <a-button shape="circle" icon="setting"></a-button>
+                </a-popover>
+              </template>
+              <a-form>
+                <a-form-item :style="{ marginBottom: '10px' }">
+                  <a-input autocomplete="username" name="username" v-model.trim="user.username"
+                    placeholder='{{ i18n "username" }}' @keydown.enter.native="login" autofocus>
+                    <a-icon slot="prefix" type="user"></a-icon>
+                  </a-input>
+                </a-form-item>
+                <a-form-item :style="{ marginBottom: '10px' }">
+                  <a-input-password autocomplete="password" name="password" v-model.trim="user.password"
+                    placeholder='{{ i18n "password" }}' @keydown.enter.native="login">
+                    <a-icon slot="prefix" type="lock"></a-icon>
+                  </a-input-password>
+                </a-form-item>
+                <a-form-item :style="{ marginBottom: '10px' }" v-if="twoFactorEnable">
+                  <a-input autocomplete="totp" name="twoFactorCode" v-model.trim="user.twoFactorCode"
+                    placeholder='{{ i18n "twoFactorCode" }}' @keydown.enter.native="login">
+                    <a-icon slot="prefix" type="key"></a-icon>
+                  </a-input>
+                </a-form-item>
+                <a-form-item :style="{ marginTop: '15px' }">
+                  <a-button :block="true" type="primary" :loading="loading" @click="login" :icon="loading ? 'poweroff' : undefined" :disabled="user.username.length <= 0 || user.password.length <= 0 || (twoFactorEnable && user.twoFactorCode.length <= 0)">
+                    {{ i18n "login" }}
+                  </a-button>
+                </a-form-item>
+              </a-form>
+            </a-card>
+            <a-card :style="{ justifyContent: 'center', textAlign: 'center', marginTop: '20px' }">
+              <span>A modified version of <a href="https://github.com/mhsanaei/3x-ui">3X-UI</a> v{{ .cur_ver }}</span>
+            </a-card>
           </a-col>
         </a-row>
       </a-layout-content>
@@ -334,4 +111,5 @@
     });
   </script>
 </body>
+
 </html>

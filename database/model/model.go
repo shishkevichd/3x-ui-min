@@ -100,7 +100,6 @@ type Client struct {
 	TotalGB    int64  `json:"totalGB" form:"totalGB"`
 	ExpiryTime int64  `json:"expiryTime" form:"expiryTime"`
 	Enable     bool   `json:"enable" form:"enable"`
-	SubID      string `json:"subId" form:"subId"`
 	Comment    string `json:"comment" form:"comment"`
 	Reset      int    `json:"reset" form:"reset"`
 }

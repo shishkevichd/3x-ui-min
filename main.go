@@ -12,7 +12,6 @@ import (
 	"x-ui/config"
 	"x-ui/database"
 	"x-ui/logger"
-	"x-ui/sub"
 	"x-ui/util/crypto"
 	"x-ui/web"
 	"x-ui/web/global"
@@ -56,15 +55,6 @@ func runWebServer() {
 		return
 	}
 
-	var subServer *sub.Server
-	subServer = sub.NewServer()
-	global.SetSubServer(subServer)
-	err = subServer.Start()
-	if err != nil {
-		log.Fatalf("Error starting sub server: %v", err)
-		return
-	}
-
 	sigCh := make(chan os.Signal, 1)
 	// Trap shutdown signals
 	signal.Notify(sigCh, syscall.SIGHUP, syscall.SIGTERM)
@@ -79,11 +69,6 @@ func runWebServer() {
 			if err != nil {
 				logger.Debug("Error stopping web server:", err)
 			}
-			err = subServer.Stop()
-			if err != nil {
-				logger.Debug("Error stopping sub server:", err)
-			}
-
 			server = web.NewServer()
 			global.SetWebServer(server)
 			err = server.Start()
@@ -92,19 +77,8 @@ func runWebServer() {
 				return
 			}
 			log.Println("Web server restarted successfully.")
-
-			subServer = sub.NewServer()
-			global.SetSubServer(subServer)
-			err = subServer.Start()
-			if err != nil {
-				log.Fatalf("Error restarting sub server: %v", err)
-				return
-			}
-			log.Println("Sub server restarted successfully.")
-
 		default:
 			server.Stop()
-			subServer.Stop()
 			log.Println("Shutting down servers.")
 			return
 		}

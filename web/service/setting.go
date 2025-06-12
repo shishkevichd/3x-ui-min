@@ -39,24 +39,6 @@ var defaultValueMap = map[string]string{
 	"remarkModel":                 "-ieo",
 	"twoFactorEnable":             "false",
 	"twoFactorToken":              "",
-	"subEnable":                   "false",
-	"subTitle":                    "",
-	"subListen":                   "",
-	"subPort":                     "2096",
-	"subPath":                     "/sub/",
-	"subDomain":                   "",
-	"subCertFile":                 "",
-	"subKeyFile":                  "",
-	"subUpdates":                  "12",
-	"subEncrypt":                  "true",
-	"subShowInfo":                 "true",
-	"subURI":                      "",
-	"subJsonPath":                 "/json/",
-	"subJsonURI":                  "",
-	"subJsonFragment":             "",
-	"subJsonNoises":               "",
-	"subJsonMux":                  "",
-	"subJsonRules":                "",
 	"externalTrafficInformEnable": "false",
 	"externalTrafficInformURI":    "",
 }
@@ -335,80 +317,8 @@ func (s *SettingService) GetTimeLocation() (*time.Location, error) {
 	return location, nil
 }
 
-func (s *SettingService) GetSubEnable() (bool, error) {
-	return s.getBool("subEnable")
-}
-
-func (s *SettingService) GetSubTitle() (string, error) {
-	return s.getString("subTitle")
-}
-
-func (s *SettingService) GetSubListen() (string, error) {
-	return s.getString("subListen")
-}
-
-func (s *SettingService) GetSubPort() (int, error) {
-	return s.getInt("subPort")
-}
-
-func (s *SettingService) GetSubPath() (string, error) {
-	return s.getString("subPath")
-}
-
-func (s *SettingService) GetSubJsonPath() (string, error) {
-	return s.getString("subJsonPath")
-}
-
-func (s *SettingService) GetSubDomain() (string, error) {
-	return s.getString("subDomain")
-}
-
-func (s *SettingService) GetSubCertFile() (string, error) {
-	return s.getString("subCertFile")
-}
-
-func (s *SettingService) GetSubKeyFile() (string, error) {
-	return s.getString("subKeyFile")
-}
-
-func (s *SettingService) GetSubUpdates() (string, error) {
-	return s.getString("subUpdates")
-}
-
-func (s *SettingService) GetSubEncrypt() (bool, error) {
-	return s.getBool("subEncrypt")
-}
-
-func (s *SettingService) GetSubShowInfo() (bool, error) {
-	return s.getBool("subShowInfo")
-}
-
 func (s *SettingService) GetPageSize() (int, error) {
 	return s.getInt("pageSize")
-}
-
-func (s *SettingService) GetSubURI() (string, error) {
-	return s.getString("subURI")
-}
-
-func (s *SettingService) GetSubJsonURI() (string, error) {
-	return s.getString("subJsonURI")
-}
-
-func (s *SettingService) GetSubJsonFragment() (string, error) {
-	return s.getString("subJsonFragment")
-}
-
-func (s *SettingService) GetSubJsonNoises() (string, error) {
-	return s.getString("subJsonNoises")
-}
-
-func (s *SettingService) GetSubJsonMux() (string, error) {
-	return s.getString("subJsonMux")
-}
-
-func (s *SettingService) GetSubJsonRules() (string, error) {
-	return s.getString("subJsonRules")
 }
 
 func (s *SettingService) GetExternalTrafficInformEnable() (bool, error) {
@@ -473,10 +383,6 @@ func (s *SettingService) GetDefaultSettings(host string) (any, error) {
 		"pageSize":      func() (any, error) { return s.GetPageSize() },
 		"defaultCert":   func() (any, error) { return s.GetCertFile() },
 		"defaultKey":    func() (any, error) { return s.GetKeyFile() },
-		"subEnable":     func() (any, error) { return s.GetSubEnable() },
-		"subTitle":      func() (any, error) { return s.GetSubTitle() },
-		"subURI":        func() (any, error) { return s.GetSubURI() },
-		"subJsonURI":    func() (any, error) { return s.GetSubJsonURI() },
 		"remarkModel":   func() (any, error) { return s.GetRemarkModel() },
 		"ipLimitEnable": func() (any, error) { return s.GetIpLimitEnable() },
 	}
@@ -489,43 +395,6 @@ func (s *SettingService) GetDefaultSettings(host string) (any, error) {
 			return "", err
 		}
 		result[key] = value
-	}
-
-	if result["subEnable"].(bool) && (result["subURI"].(string) == "" || result["subJsonURI"].(string) == "") {
-		subURI := ""
-		subTitle, _ := s.GetSubTitle()
-		subPort, _ := s.GetSubPort()
-		subPath, _ := s.GetSubPath()
-		subJsonPath, _ := s.GetSubJsonPath()
-		subDomain, _ := s.GetSubDomain()
-		subKeyFile, _ := s.GetSubKeyFile()
-		subCertFile, _ := s.GetSubCertFile()
-		subTLS := false
-		if subKeyFile != "" && subCertFile != "" {
-			subTLS = true
-		}
-		if subDomain == "" {
-			subDomain = strings.Split(host, ":")[0]
-		}
-		if subTLS {
-			subURI = "https://"
-		} else {
-			subURI = "http://"
-		}
-		if (subPort == 443 && subTLS) || (subPort == 80 && !subTLS) {
-			subURI += subDomain
-		} else {
-			subURI += fmt.Sprintf("%s:%d", subDomain, subPort)
-		}
-		if result["subURI"].(string) == "" {
-			result["subURI"] = subURI + subPath
-		}
-		if result["subTitle"].(string) == "" {
-			result["subTitle"] = subTitle
-		}
-		if result["subJsonURI"].(string) == "" {
-			result["subJsonURI"] = subURI + subJsonPath
-		}
 	}
 
 	return result, nil

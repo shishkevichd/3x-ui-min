@@ -44,18 +44,6 @@
             <a-select-option v-for="key in USERS_SECURITY" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
-    <a-form-item v-if="client.email && app.subSettings.enable">
-        <template slot="label">
-            <a-tooltip>
-                <template slot="title">
-                    <span>{{ i18n "pages.inbounds.subscriptionDesc" }}</span>
-                </template>
-                Subscription
-                <a-icon @click="client.subId = RandomUtil.randomLowerAndNum(16)" type="sync"></a-icon>
-            </a-tooltip>
-        </template>
-        <a-input v-model.trim="client.subId"></a-input>
-    </a-form-item>
     <a-form-item v-if="client.email" label='{{ i18n "comment" }}'>
         <a-input v-model.trim="client.comment"></a-input>
     </a-form-item>
