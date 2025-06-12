@@ -16,19 +16,15 @@ import (
 var (
 	i18nBundle   *i18n.Bundle
 	LocalizerWeb *i18n.Localizer
-	LocalizerBot *i18n.Localizer
 )
 
 type I18nType string
 
 const (
-	Bot I18nType = "bot"
 	Web I18nType = "web"
 )
 
-type SettingService interface {
-	GetTgLang() (string, error)
-}
+type SettingService interface {}
 
 func InitLocalizer(i18nFS embed.FS, settingService SettingService) error {
 	// set default bundle to english
@@ -37,11 +33,6 @@ func InitLocalizer(i18nFS embed.FS, settingService SettingService) error {
 
 	// parse files
 	if err := parseTranslationFiles(i18nFS, i18nBundle); err != nil {
-		return err
-	}
-
-	// setup bot locale
-	if err := initTGBotLocalizer(settingService); err != nil {
 		return err
 	}
 
@@ -67,8 +58,6 @@ func I18n(i18nType I18nType, key string, params ...string) string {
 	var localizer *i18n.Localizer
 
 	switch i18nType {
-	case "bot":
-		localizer = LocalizerBot
 	case "web":
 		localizer = LocalizerWeb
 	default:
@@ -88,16 +77,6 @@ func I18n(i18nType I18nType, key string, params ...string) string {
 	}
 
 	return msg
-}
-
-func initTGBotLocalizer(settingService SettingService) error {
-	botLang, err := settingService.GetTgLang()
-	if err != nil {
-		return err
-	}
-
-	LocalizerBot = i18n.NewLocalizer(i18nBundle, botLang)
-	return nil
 }
 
 func LocalizerMiddleware() gin.HandlerFunc {

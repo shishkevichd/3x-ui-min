@@ -63,18 +63,6 @@
                 <a-input-number :min="0" step="5" v-model="allSetting.pageSize" :style="{ width: '100%' }"></a-input>
             </template>
         </a-setting-list-item>
-        <a-setting-list-item paddings="small">
-            <template #title>{{ i18n "pages.settings.language"}}</template>
-            <template #control>
-                <a-select ref="selectLang" v-model="lang" @change="LanguageManager.setLanguage(lang)"
-                    :dropdown-class-name="themeSwitcher.currentTheme" :style="{ width: '100%' }">
-                    <a-select-option :value="l.value" :label="l.value" v-for="l in LanguageManager.supportedLanguages">
-                        <span role="img" :aria-label="l.name" v-text="l.icon"></span> &nbsp;&nbsp; <span
-                            v-text="l.name"></span>
-                    </a-select-option>
-                </a-select>
-            </template>
-        </a-setting-list-item>
     </a-collapse-panel>
     <a-collapse-panel key="2" header='{{ i18n "pages.settings.notifications" }}'>
         <a-setting-list-item paddings="small">
@@ -131,17 +119,6 @@
             <template #description>{{ i18n "pages.settings.timeZoneDesc"}}</template>
             <template #control>
                 <a-input type="text" v-model="allSetting.timeLocation"></a-input>
-            </template>
-        </a-setting-list-item>
-        <a-setting-list-item paddings="small">
-            <template #title>{{ i18n "pages.settings.datepicker"}}</template>
-            <template #description>{{ i18n "pages.settings.datepickerDescription"}}</template>
-            <template #control>
-                <a-select :style="{ width: '100%' }" :dropdown-class-name="themeSwitcher.currentTheme" v-model="datepicker">
-                    <a-select-option v-for="item in datepickerList" :value="item.value">
-                        <span v-text="item.name"></span>
-                    </a-select-option>
-                </a-select>
             </template>
         </a-setting-list-item>
     </a-collapse-panel>

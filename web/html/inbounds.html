@@ -438,11 +438,8 @@
                 </template>
                 <template slot="expiryTime" slot-scope="text, dbInbound">
                   <a-popover v-if="dbInbound.expiryTime > 0" :overlay-class-name="themeSwitcher.currentTheme">
-                    <template slot="content" v-if="app.datepicker === 'gregorian'">
+                    <template slot="content">
                       [[ DateUtil.formatMillis(dbInbound.expiryTime) ]]
-                    </template>
-                    <template v-else slot="content">
-                      [[ DateUtil.convertToJalalian(moment(dbInbound.expiryTime)) ]]
                     </template>
                     <a-tag :style="{ minWidth: '50px' }" :color="ColorUtils.usageColor(new Date().getTime(), app.expireDiff, dbInbound._expiryTime)">
                       [[ remainedDays(dbInbound._expiryTime) ]]
@@ -538,11 +535,8 @@
                           <td>
                             <a-tag :style="{ minWidth: '50px', textAlign: 'center' }" v-if="dbInbound.expiryTime > 0"
                               :color="dbInbound.isExpiry? 'red': 'blue'">
-                              <template v-if="app.datepicker === 'gregorian'">
+                              <template>
                                 [[ DateUtil.formatMillis(dbInbound.expiryTime) ]]
-                              </template>
-                              <template v-else>
-                                [[ DateUtil.convertToJalalian(moment(dbInbound.expiryTime)) ]]
                               </template>
                             </a-tag>
                             <a-tag v-else :style="{ textAlign: 'center' }" color="purple" class="infinite-tag">
@@ -588,7 +582,6 @@
 {{template "component/aSidebar" .}}
 {{template "component/aThemeSwitch" .}}
 {{template "component/aCustomStatistic" .}}
-{{template "component/aPersianDatepicker" .}}
 <script>
     const columns = [{
         title: "ID",
@@ -682,7 +675,6 @@
         mixins: [MediaQueryMixin],
         data: {
             themeSwitcher,
-            persianDatepicker,
             spinning: false,
             inbounds: [],
             dbInbounds: [],
@@ -706,8 +698,6 @@
                 subJsonURI : '',
             },
             remarkModel: '-ieo',
-            datepicker: 'gregorian',
-            tgBotEnable: false,
             showAlert: false,
             ipLimitEnable: false,
             pageSize: 50,
@@ -747,7 +737,6 @@
                     this.trafficDiff = trafficDiff * 1073741824;
                     this.defaultCert = defaultCert;
                     this.defaultKey = defaultKey;
-                    this.tgBotEnable = tgBotEnable;
                     this.subSettings = {
                         enable : subEnable,
                         subTitle : subTitle,
@@ -756,7 +745,6 @@
                     };
                     this.pageSize = pageSize;
                     this.remarkModel = remarkModel;
-                    this.datepicker = datepicker;
                     this.ipLimitEnable = ipLimitEnable;
                 }
             },

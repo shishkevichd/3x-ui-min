@@ -106,9 +106,6 @@
               <a-tab-pane key="2" tab='{{ i18n "pages.settings.securitySettings" }}' :style="{ paddingTop: '20px' }">
                 {{ template "settings/panel/security" . }}
               </a-tab-pane>
-              <a-tab-pane key="3" tab='{{ i18n "pages.settings.TGBotSettings" }}' :style="{ paddingTop: '20px' }">
-                {{ template "settings/panel/telegram" . }}
-              </a-tab-pane>
               <a-tab-pane key="4" tab='{{ i18n "pages.settings.subSettings" }}' :style="{ paddingTop: '20px' }">
                 {{ template "settings/panel/subscription/general" . }}
               </a-tab-pane>
@@ -140,10 +137,8 @@
       allSetting: new AllSetting(),
       saveBtnDisable: true,
       user: {},
-      lang: LanguageManager.getLanguage(),
       remarkModels: { i: 'Inbound', e: 'Email', o: 'Other' },
       remarkSeparators: [' ', '-', '_', '@', ':', '~', '|', ',', '.', '/'],
-      datepickerList: [{ name: 'Gregorian (Standard)', value: 'gregorian' }, { name: 'Jalalian (شمسی)', value: 'jalalian' }],
       remarkSample: '',
       defaultFragment: {
         tag: "fragment",
@@ -233,12 +228,6 @@
       set remarkSeparator(value) {
         this.allSetting.remarkModel = value + this.allSetting.remarkModel.substring(1);
         this.changeRemarkSample();
-      },
-      get datepicker() {
-        return this.allSetting.datepicker ? this.allSetting.datepicker : 'gregorian';
-      },
-      set datepicker(value) {
-        this.allSetting.datepicker = value;
       },
       changeRemarkSample() {
         sample = []

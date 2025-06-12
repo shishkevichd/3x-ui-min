@@ -226,21 +226,9 @@
                 </a-col>
                 <a-col :sm="24" :lg="12">
                   <a-card title='3X-UI' hoverable>
-                    <a rel="noopener" href="https://github.com/MHSanaei/3x-ui/releases" target="_blank">
-                      <a-tag color="green">
-                        <span>v{{ .cur_ver }}</span>
-                      </a-tag>
-                    </a>
-                    <a rel="noopener" href="https://t.me/XrayUI" target="_blank">
-                      <a-tag color="green">
-                        <span>@XrayUI</span>
-                      </a-tag>
-                    </a>
-                    <a rel="noopener" href="https://github.com/MHSanaei/3x-ui/wiki" target="_blank">
-                      <a-tag>
-                        <span>{{ i18n "pages.index.documentation" }}</span>
-                      </a-tag>
-                    </a>
+                    <a-tag color="green">
+                      <span>Based on v{{ .cur_ver }}</span>
+                    </a-tag>
                   </a-card>
                 </a-col>
                 <a-col :sm="24" :lg="12">
@@ -381,7 +369,7 @@
         </a-collapse-panel>
         <a-collapse-panel key="2" header='Geofiles'>
           <a-list class="ant-version-list" bordered :style="{ width: '100%' }">
-            <a-list-item class="ant-version-list-item" v-for="file, index in ['geosite.dat', 'geoip.dat', 'geosite_IR.dat', 'geoip_IR.dat', 'geosite_RU.dat', 'geoip_RU.dat']">
+            <a-list-item class="ant-version-list-item" v-for="file, index in ['geosite.dat', 'geoip.dat']">
               <a-tag :color="index % 2 == 0 ? 'purple' : 'green'">[[ file ]]</a-tag>
               <a-icon type="reload" @click="updateGeofile(file)" :style="{ marginRight: '8px' }"/>
             </a-list-item>

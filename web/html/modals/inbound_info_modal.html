@@ -234,11 +234,8 @@
           <td>
             <template v-if="infoModal.clientSettings.expiryTime > 0">
               <a-tag :color="ColorUtils.usageColor(new Date().getTime(), app.expireDiff, infoModal.clientSettings.expiryTime)"> 
-                <template v-if="app.datepicker === 'gregorian'">
+                <template>
                   [[ DateUtil.formatMillis(infoModal.clientSettings.expiryTime) ]]
-                </template>
-                <template v-else>
-                  [[ DateUtil.convertToJalalian(moment(infoModal.clientSettings.expiryTime)) ]]
                 </template>
               </a-tag>
             </template>
@@ -271,17 +268,6 @@
             </a-tooltip>
           </tr-info-title>
           <a :href="[[ infoModal.subJsonLink ]]" target="_blank">[[ infoModal.subJsonLink ]]</a>
-        </tr-info-row>
-      </template>
-      <template v-if="app.tgBotEnable && infoModal.clientSettings.tgId">
-        <a-divider>Telegram ChatID</a-divider>
-        <tr-info-row class="tr-info-row">
-          <tr-info-title class="tr-info-title">
-            <a-tag color="blue">[[ infoModal.clientSettings.tgId ]]</a-tag>
-            <a-tooltip title='{{ i18n "copy" }}'>
-              <a-button size="small" icon="snippets" @click="copy(infoModal.clientSettings.tgId)"></a-button>
-            </a-tooltip>
-          </tr-info-title>
         </tr-info-row>
       </template>
       <template v-if="dbInbound.hasLink()">

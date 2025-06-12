@@ -27,16 +27,6 @@ type AllSetting struct {
 	ExpireDiff                  int    `json:"expireDiff" form:"expireDiff"`
 	TrafficDiff                 int    `json:"trafficDiff" form:"trafficDiff"`
 	RemarkModel                 string `json:"remarkModel" form:"remarkModel"`
-	TgBotEnable                 bool   `json:"tgBotEnable" form:"tgBotEnable"`
-	TgBotToken                  string `json:"tgBotToken" form:"tgBotToken"`
-	TgBotProxy                  string `json:"tgBotProxy" form:"tgBotProxy"`
-	TgBotAPIServer              string `json:"tgBotAPIServer" form:"tgBotAPIServer"`
-	TgBotChatId                 string `json:"tgBotChatId" form:"tgBotChatId"`
-	TgRunTime                   string `json:"tgRunTime" form:"tgRunTime"`
-	TgBotBackup                 bool   `json:"tgBotBackup" form:"tgBotBackup"`
-	TgBotLoginNotify            bool   `json:"tgBotLoginNotify" form:"tgBotLoginNotify"`
-	TgCpu                       int    `json:"tgCpu" form:"tgCpu"`
-	TgLang                      string `json:"tgLang" form:"tgLang"`
 	TimeLocation                string `json:"timeLocation" form:"timeLocation"`
 	TwoFactorEnable				bool   `json:"twoFactorEnable" form:"twoFactorEnable"`
 	TwoFactorToken				string `json:"twoFactorToken" form:"twoFactorToken"`
@@ -60,7 +50,6 @@ type AllSetting struct {
 	SubJsonNoises               string `json:"subJsonNoises" form:"subJsonNoises"`
 	SubJsonMux                  string `json:"subJsonMux" form:"subJsonMux"`
 	SubJsonRules                string `json:"subJsonRules" form:"subJsonRules"`
-	Datepicker                  string `json:"datepicker" form:"datepicker"`
 }
 
 func (s *AllSetting) CheckValid() error {

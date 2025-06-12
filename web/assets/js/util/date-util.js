@@ -143,9 +143,4 @@ class DateUtil {
         date.setMinTime();
         return date;
     }
-
-    static convertToJalalian(date) {
-        return date && moment.isMoment(date) ? date.format('jYYYY/jMM/jDD HH:mm:ss') : null;
-    }
-
 }

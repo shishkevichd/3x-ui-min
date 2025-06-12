@@ -11,12 +11,6 @@
         <a-switch :style="{ marginLeft: '2px' }" size="small" :default-checked="themeSwitcher.isDarkTheme"
           @change="themeSwitcher.toggleTheme()"></a-switch>
       </a-menu-item>
-      <a-menu-item id="change-theme-ultra" v-if="themeSwitcher.isDarkTheme" class="ant-menu-theme-switch"
-        @mousedown="themeSwitcher.animationsOffUltra()">
-        <span>{{ i18n "menu.ultraDark" }}</span>
-        <a-checkbox :style="{ marginLeft: '2px' }" :checked="themeSwitcher.isUltra"
-          @click="themeSwitcher.toggleUltra()"></a-checkbox>
-      </a-menu-item>
     </a-sub-menu>
   </a-menu>
 </template>
@@ -29,10 +23,6 @@
       <a-switch size="small" :default-checked="themeSwitcher.isDarkTheme" @change="themeSwitcher.toggleTheme()"></a-switch>
       <span>{{ i18n "menu.dark" }}</span>
     </a-space>
-    <a-space v-if="themeSwitcher.isDarkTheme" direction="horizontal" size="small">
-      <a-checkbox :checked="themeSwitcher.isUltra" @click="themeSwitcher.toggleUltra()"></a-checkbox>
-      <span>{{ i18n "menu.ultraDark" }}</span>
-    </a-space>
   </a-space>
 </template>
 {{end}}
@@ -41,10 +31,6 @@
 <script>
   function createThemeSwitcher() {
     const isDarkTheme = localStorage.getItem('dark-mode') === 'true';
-    const isUltra = localStorage.getItem('isUltraDarkThemeEnabled') === 'true';
-    if (isUltra) {
-      document.documentElement.setAttribute('data-theme', 'ultra-dark');
-    }
     const theme = isDarkTheme ? 'dark' : 'light';
     document.querySelector('body').setAttribute('class', theme);
     return {
@@ -58,18 +44,7 @@
           document.documentElement.removeAttribute('data-theme-animations');
         });
       },
-      animationsOffUltra() {
-        document.documentElement.setAttribute('data-theme-animations', 'off');
-        const themeAnimationsUltra = document.querySelector('#change-theme-ultra');
-        themeAnimationsUltra.addEventListener('mouseleave', () => {
-          document.documentElement.removeAttribute('data-theme-animations');
-        });
-        themeAnimationsUltra.addEventListener('touchend', () => {
-          document.documentElement.removeAttribute('data-theme-animations');
-        });
-      },
       isDarkTheme,
-      isUltra,
       get currentTheme() {
         return this.isDarkTheme ? 'dark' : 'light';
       },
@@ -78,15 +53,6 @@
         localStorage.setItem('dark-mode', this.isDarkTheme);
         document.querySelector('body').setAttribute('class', this.isDarkTheme ? 'dark' : 'light');
         document.getElementById('message').className = themeSwitcher.currentTheme;
-      },
-      toggleUltra() {
-        this.isUltra = !this.isUltra;
-        if (this.isUltra) {
-          document.documentElement.setAttribute('data-theme', 'ultra-dark');
-        } else {
-          document.documentElement.removeAttribute('data-theme');
-        }
-        localStorage.setItem('isUltraDarkThemeEnabled', this.isUltra.toString());
       }
     };
   }

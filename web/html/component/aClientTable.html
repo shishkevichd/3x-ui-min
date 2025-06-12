@@ -91,11 +91,8 @@
         <span v-if="client.expiryTime < 0">{{ i18n "pages.client.delayedStart" }}
         </span>
         <span v-else>
-          <template v-if="app.datepicker === 'gregorian'">
+          <template>
             [[ DateUtil.formatMillis(client._expiryTime) ]]
-          </template>
-          <template v-else>
-            [[ DateUtil.convertToJalalian(moment(client._expiryTime)) ]]
           </template>
         </span>
       </template>
@@ -116,11 +113,8 @@
         <span v-if="client.expiryTime < 0">{{ i18n "pages.client.delayedStart" }}
         </span>
         <span v-else>
-          <template v-if="app.datepicker === 'gregorian'">
+          <template>
             [[ DateUtil.formatMillis(client._expiryTime) ]]
-          </template>
-          <template v-else>
-            [[ DateUtil.convertToJalalian(moment(client._expiryTime)) ]]
           </template>
         </span>
       </template>
@@ -216,11 +210,8 @@
                   <span v-if="client.expiryTime < 0">{{ i18n "pages.client.delayedStart" }}
                   </span>
                   <span v-else>
-                    <template v-if="app.datepicker === 'gregorian'">
+                    <template>
                       [[ DateUtil.formatMillis(client._expiryTime) ]]
-                    </template>
-                    <template v-else>
-                      [[ DateUtil.convertToJalalian(moment(client._expiryTime)) ]]
                     </template>
                   </span>
                 </template>
@@ -236,11 +227,8 @@
                   <span v-if="client.expiryTime < 0">{{ i18n "pages.client.delayedStart" }}
                   </span>
                   <span v-else>
-                    <template v-if="app.datepicker === 'gregorian'">
+                    <template>
                       [[ DateUtil.formatMillis(client._expiryTime) ]]
-                    </template>
-                    <template v-else>
-                      [[ DateUtil.convertToJalalian(moment(client._expiryTime)) ]]
                     </template>
                   </span>
                 </template>
