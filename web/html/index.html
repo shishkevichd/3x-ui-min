@@ -4,7 +4,7 @@
 <style>
   @media (min-width: 769px) {
     .ant-layout-content {
-      margin: 8px 12px;
+      margin: 20px 16px;
     }
     .ant-card-hoverable {
       margin-inline: 0.3rem;
@@ -94,6 +94,14 @@
                 </a-card>
               </a-row>
               <a-row v-else>
+                <a-col>
+                  <a-card hoverable>
+                    <a-space direction="horizontal" size="small">
+                      <span :style="{ fontSize: '16px', fontWeight: '500' }">3X-UI</span>
+                      <a-tag color="green">v{{ .cur_ver }}</a-tag>
+                    </a-space>
+                  </a-card>
+                </a-col>
                 <a-col :sm="24" :lg="12">
                   <a-card hoverable>
                     <template #title>
