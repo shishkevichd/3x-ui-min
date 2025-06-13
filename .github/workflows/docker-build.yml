@@ -1,38 +1,37 @@
-# .github/workflows/docker-publish.yml
 name: Build and Publish Docker Image
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 permissions:
   contents: read
   packages: write
   id-token: write
-
+  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Log in to GHCR
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker metadata
+      - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}
-
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
+          tags: |
+            type=raw
+            raw=latest
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
