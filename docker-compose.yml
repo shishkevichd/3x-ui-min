@@ -1,14 +1,16 @@
-# services:
-#   panel:
-#     image: ghcr.io/mhsanaei/3x-ui:latest
-#     container_name: xui_app
-#     hostname: yourhostname
-#     volumes:
-#       - $PWD/db/:/etc/x-ui/
-#       - $PWD/cert/:/root/cert/
-#     environment:
-#       XRAY_VMESS_AEAD_FORCED: "false"
-#       XUI_ENABLE_FAIL2BAN: "true"
-#     tty: true
-#     network_mode: host
-#     restart: unless-stopped
+services:
+  panel:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: xui_app
+    volumes:
+      - ./data/db/:/etc/x-ui/
+      - ./data/cert/:/root/cert/
+    environment:
+      XRAY_VMESS_AEAD_FORCED: "false"
+      XUI_ENABLE_FAIL2BAN: "true"
+    ports:
+      - "2053:2053"
+    tty: true
+    restart: unless-stopped
