@@ -13,7 +13,7 @@ permissions:
   id-token: write
   
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,9 +29,6 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
-          tags: |
-            type=raw
-            raw=latest
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
